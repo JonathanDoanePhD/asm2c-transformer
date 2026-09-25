@@ -1,46 +1,18 @@
-# asm2c-transformer
+# Assembly-to-C transformer experiment
 
-A minimal transformer-based decompiler that learns to convert **assembly code** back into **C source code** using a sequence-to-sequence model.
+An exploratory sequence-to-sequence experiment using `t5-small` to map assembly snippets to C snippets. The [training examples](data/) are deliberately tiny, so this project demonstrates a modeling workflow rather than a capable decompiler.
 
-> This project was inspired by [RevEng.AI](https://blog.reveng.ai/training-an-llm-to-decompile-assembly-code/) and serves as a hands-on starting point for training and evaluating AI-based decompilers.
-> Special thanks to Russell for the reverse engineering inspiration.
+## Explore the project
 
----
+- [Training script](scripts/train.py)
+- [Model and dataset code](scripts/)
+- [Inference notebook](test_the_model.ipynb)
+- [Dependency list](requirements.txt)
 
-## Project Structure
+The original workflow installs dependencies, runs `python scripts/train.py` from the repository root, and opens the notebook to inspect generated output. Training downloads a pretrained model and writes a local `saved_model/` directory. The script assumes its dependency versions and import paths are compatible with the local environment; it has not been retested against recent libraries.
 
-```
-asm2c-transformer/
-├── data/ # Assembly ↔ C function pairs
-├── scripts/ # Model, dataset, and training scripts
-├── tokenizer/ # Placeholder for custom tokenization
-├── saved_model/ # Folder created after training
-├── test_the_model.ipynb # Jupyter notebook for inference
-├── requirements.txt
-└── README.md
-```
+## Interpretation
 
----
+A few paired examples cannot establish translation quality across compilers, architectures, optimizations, or unseen programs. Treat outputs as experimental and inspect them manually. This is not a production reverse-engineering tool.
 
-## How to Use
-
-1. **Install dependencies**  
-   pip install -r requirements.txt
-
-2. Train the model
-   From the root directory:
-   python scripts/train.py
-
-3. Test it out
-   Open `test_the_model.ipynb` in Jupyter or VS Code.
-   You can paste in assembly and see the generated C code.
-
-## Notes
-
-* The dataset is tiny - just 3 examples - and easily expandable.
-* Uses `t5-small` from HuggingFace for fast experimentation.
-* Model and tokenizer will be saved to `saved_model/` after training.
-
-## Contribute or Fork
-
-This project is designed to be a launchpad for deeper exploration. Feel free to fork, improve, or ping me if you'd like to collaborate on a larger dataset or model!
+Inspired by publicly discussed assembly-to-source research, including [RevEng.AI's write-up](https://blog.reveng.ai/training-an-llm-to-decompile-assembly-code/).
